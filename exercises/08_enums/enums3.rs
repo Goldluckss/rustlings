@@ -44,13 +44,46 @@ impl State {
     }
 
     fn process(&mut self, message: Message) {
-        // TODO: Create a match expression to process the different message
-        // variants using the methods defined above.
+        match message {
+            Message::Resize { width, height } => self.resize(width, height),
+            Message::Move(point) => self.move_position(point),
+            Message::Echo(s) => self.echo(s),
+            Message::ChangeColor(red, green, blue) => self.change_color(red, green, blue),
+            Message::Quit => self.quit(),
+        }
+    }
+
+    fn print_state(&self) {
+        println!("Width: {}", self.width);
+        println!("Height: {}", self.height);
+        println!("Position: ({}, {})", self.position.x, self.position.y);
+        println!("Message: {}", self.message);
+        println!("Color: ({}, {}, {})", self.color.0, self.color.1, self.color.2);
+        println!("Quit: {}", self.quit);
     }
 }
 
 fn main() {
-    // You can optionally experiment here.
+    let mut state = State {
+        width: 0,
+        height: 0,
+        position: Point { x: 0, y: 0 },
+        message: String::from("hello world"),
+        color: (0, 0, 0),
+        quit: false,
+    };
+
+    state.process(Message::Resize {
+        width: 10,
+        height: 30,
+    });
+    state.process(Message::Move(Point { x: 10, y: 15 }));
+    state.process(Message::Echo(String::from("Hello world!")));
+    state.process(Message::ChangeColor(255, 0, 255));
+    state.process(Message::Quit);
+
+    // Print the state
+    state.print_state();
 }
 
 #[cfg(test)]
