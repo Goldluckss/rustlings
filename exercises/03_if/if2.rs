@@ -3,12 +3,16 @@ fn picky_eater(food: &str) -> &str {
     if food == "strawberry" {
         "Yummy!"
     } else {
-        1
+        "Not yummy!"
     }
 }
 
 fn main() {
     // You can optionally experiment here.
+    let foods = ["strawberry", "potato", "broccoli", "literally anything"];
+    for &food in &foods {
+        println!("{}: {}", food, picky_eater(food));
+    }
 }
 
 // TODO: Read the tests to understand the desired behavior.
